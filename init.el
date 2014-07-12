@@ -10,7 +10,16 @@
                       matlab-mode
                       monokai-theme
                       multiple-cursors
-                      org-table-comment))
+                      org-table-comment
+                      js2-mode
+                      clojure-mode
+                      cider
+                      ac-math
+                      ac-js2
+                      ac-nrepl
+                      ac-python
+                      ido-ubiquitous))
+
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
@@ -21,6 +30,7 @@
 (global-linum-mode t)
 (setq linum-format "%3d ")
 (setq auto-save-default nil)
+(setq make-backup-files nil)
 (setq-default show-trailing-whitespace t)
 
 ;; GUI Stuff
@@ -82,4 +92,5 @@
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
 (setq TeX-engine 'pdflatex)
+
 
