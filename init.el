@@ -8,6 +8,7 @@
   (package-refresh-contents))
 (defvar my-packages '(ac-ispell
                       matlab-mode
+                      php-mode
                       monokai-theme
                       multiple-cursors
                       org-table-comment
@@ -24,7 +25,6 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
-
 ;; settings
 (setq inhibit-splash-screen t)
 (global-linum-mode t)
@@ -32,6 +32,8 @@
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 (setq-default show-trailing-whitespace t)
+(setq-default tab-width 4)
+
 
 ;; GUI Stuff
 (menu-bar-mode -1)
