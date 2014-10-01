@@ -13,7 +13,8 @@
                       ac-js2
                       ac-nrepl
                       ac-python
-                      ido-ubiquitous))
+                      ido-ubiquitous
+                      ecb)) ;; Emacs Code Browser (IDE like experience)
 
 ;; install packages listed above
 (require 'package)
@@ -45,6 +46,11 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
+
+;; window resizing
+(global-set-key (kbd "M-<up>") 'enlarge-window)
+(global-set-key (kbd "M-<down>") 'shrink-window)
+
 
 ;; Generic clicking
 (require 'mouse)
