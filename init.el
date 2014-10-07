@@ -112,9 +112,10 @@
 (setq-default TeX-master nil)
 (setq TeX-engine 'pdflatex)
 
-;; email
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-(require 'mu4e)
-(setq mu4e-sent-folder   "/Sent")
-(setq mu4e-drafts-folder "/Drafts")
-(setq mu4e-trash-folder  "/Trash")
+;; yasnippet
+(add-to-list 'load-path
+              "~/.emacs.d/plugins/yasnippet")
+(require 'yasnippet)
+(setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"))
+(yas-global-mode 1)
