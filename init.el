@@ -14,6 +14,8 @@
                       ac-nrepl
                       ac-python
                       ido-ubiquitous
+                      auctex
+                      tabbar
                       ecb)) ;; Emacs Code Browser (IDE like experience)
 
 ;; install packages listed above
@@ -104,11 +106,13 @@
 (add-hook 'text-mode-hook 'flyspell-mode)
 
 ;; latex specific
+(require 'tex)
 (add-hook 'latex-mode-hook 'auto-fill-mode)
 (add-hook 'latex-mode-hook 'flyspell-mode)
-(setq exec-path (append exec-path '("/usr/texbin")))
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(TeX-global-PDF-mode t)
+;; (setq TeX-auto-save t)
+;; (setq TeX-parse-self t)
 (setq-default TeX-master nil)
 (setq TeX-engine 'pdflatex)
 
