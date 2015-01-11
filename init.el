@@ -14,9 +14,8 @@
                       ac-nrepl
                       ac-python
                       ido-ubiquitous
-                      auctex
-                      tabbar
-                      ecb)) ;; Emacs Code Browser (IDE like experience)
+                      deft
+                      writegood-mode))
 
 ;; install packages listed above
 (require 'package)
@@ -123,3 +122,9 @@
 (setq yas-snippet-dirs
       '("~/.emacs.d/snippets"))
 (yas-global-mode 1)
+
+;; deft
+(setq deft-extension "txt")
+(setq deft-directory "~/Dropbox/deft")
+(global-set-key [f8] 'deft)
+
