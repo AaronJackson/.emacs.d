@@ -21,6 +21,7 @@ Keybindings
 -----------
 
 Globally...
+    f8          Goes to deft for rapid note taking
     f12         Deletes trailing whitespace from the buffer
     C-/         Comments or uncomments region or line
     C->         Multiple cursors: mark next like this
