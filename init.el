@@ -1,26 +1,18 @@
 ;; package listings to be installed
-(defvar my-packages '(ac-ispell
-                      matlab-mode
+(defvar my-packages '(matlab-mode
                       php-mode
-                      php-refactor-mode
                       monokai-theme
                       multiple-cursors
                       org-table-comment
                       js2-mode
-                      clojure-mode
-                      cider
-                      ac-math
-                      ac-js2
-                      ac-nrepl
-                      ac-python
                       ido-ubiquitous
                       deft
-                      writegood-mode))
+                      auctex
+                      ))
 
 ;; install packages listed above
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
 (when (not (member "elpa" (directory-files "~/.emacs.d")))
@@ -110,8 +102,6 @@
 (add-hook 'latex-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (TeX-global-PDF-mode t)
-;; (setq TeX-auto-save t)
-;; (setq TeX-parse-self t)
 (setq-default TeX-master nil)
 (setq TeX-engine 'pdflatex)
 
