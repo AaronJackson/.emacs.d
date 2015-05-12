@@ -2,8 +2,6 @@
 (defvar my-packages '(matlab-mode
                       php-mode
                       monokai-theme
-                      multiple-cursors
-                      org-table-comment
                       js2-mode
                       ido-ubiquitous
                       deft
@@ -44,16 +42,6 @@
 (global-set-key (kbd "M-<up>") 'enlarge-window)
 (global-set-key (kbd "M-<down>") 'shrink-window)
 
-
-;; Generic clicking
-(require 'mouse)
-(xterm-mouse-mode t)
-(defun track-mouse (e))
-(setq mouse-sel-mode t)
-
-(global-set-key (kbd "<mouse-4>") 'scroll-down-line)
-(global-set-key (kbd "<mouse-5>") 'scroll-up-line)
-
 ;; ido mode
 (require 'ido)
 (ido-mode t)
@@ -82,12 +70,6 @@
     (comment-or-uncomment-region beg end)))
 (global-set-key (kbd "C-/") 'comment-or-uncomment-region-or-line)
 
-;; mutliple cursors
-(require 'multiple-cursors)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-?") 'mc/edit-lines)
-(global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
-
 ;; spell checking
 (setq ispell-program-name "aspell"
       ispell-extra-args '("--sug-mode=ultra"))
@@ -105,16 +87,7 @@
 (setq-default TeX-master nil)
 (setq TeX-engine 'pdflatex)
 
-;; yasnippet
-(add-to-list 'load-path
-              "~/.emacs.d/plugins/yasnippet")
-(require 'yasnippet)
-(setq yas-snippet-dirs
-      '("~/.emacs.d/snippets"))
-(yas-global-mode 1)
-
 ;; deft
 (setq deft-extension "txt")
 (setq deft-directory "~/Dropbox/deft")
 (global-set-key [f8] 'deft)
-
