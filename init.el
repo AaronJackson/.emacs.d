@@ -25,7 +25,7 @@
 (setq linum-format "%3d ")
 (setq auto-save-default nil)
 (setq make-backup-files nil)
-(setq-default show-trailing-whitespace t)
+;; (setq-default show-trailing-whitespace t)
 (setq-default tab-width 4)
 
 ;; GUI Stuff
@@ -89,5 +89,20 @@
 
 ;; deft
 (setq deft-extension "txt")
-(setq deft-directory "~/Dropbox/deft")
+(setq deft-directory "~/Documents/Deft")
 (global-set-key [f8] 'deft)
+
+
+
+;; mu4e
+(load-file "~/.murc")
+
+
+;; printing
+(defun send-region-to-printer (&optional b e)
+  (interactive)
+  (shell-command-on-region
+   b e
+   "ssh orion.local \"iconv -f UTF-8 -t CP850 > /dev/lp0\""
+   ))
+    
