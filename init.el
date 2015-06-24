@@ -1,67 +1,51 @@
-;; package listings to be installed
-(defvar my-packages '(matlab-mode
-                      php-mode
-                      monokai-theme
-                      js2-mode
-                      ido-ubiquitous
-                      deft
-                      auctex
-                      ))
-
-;; install packages listed above
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PACKAGE SOURCE SETUP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'package)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
 (when (not (member "elpa" (directory-files "~/.emacs.d")))
   (package-refresh-contents))
-(dolist (p my-packages)
+(defun check-installed (p)
   (when (not (package-installed-p p))
     (package-install p)))
 
-;; settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; SETTINGS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq inhibit-splash-screen t)
-(global-linum-mode t)
+
+(global-linum-mode t) ;; line numbers
 (setq linum-format "%3d ")
-(setq auto-save-default nil)
-(setq make-backup-files nil)
-;; (setq-default show-trailing-whitespace t)
-(setq-default tab-width 4)
 
-;; GUI Stuff
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(load-theme 'monokai t)
+(setq auto-save-default nil ;; auto save
+      make-backup-files nil)
 
-;; tab settings
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq indent-line-function 'insert-tab)
+(setq indent-tabs-mode nil ;; tabs
+      tab-width 4)
 
-;; window resizing
-(global-set-key (kbd "M-<up>") 'enlarge-window)
-(global-set-key (kbd "M-<down>") 'shrink-window)
-
-;; ido mode
-(require 'ido)
-(ido-mode t)
-
-;; matlab stuff
-(require 'matlab)
-(setq exec-path (append exec-path '("/usr/local/MATLAB/R2013a_Student/bin")))
-(add-hook 'matlab-mode-hook
-          (lambda ()
-            (define-key matlab-mode-map (kbd "<f5>") 'matlab-shell-save-and-go)
-            (define-key matlab-mode-map (kbd "<f6>") 'matlab-shell-run-cell)
-            )
-          )
-
-;; general shortcuts
+(setq-default show-trailing-whitespace t) ;; i hate it
 (global-set-key (kbd "<f12>") 'delete-trailing-whitespace)
 
-;; commenting code
+(tool-bar-mode -1) ;; gui / style
+(check-installed 'monokai-theme)
+(load-theme 'monokai t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; IDO MODE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(check-installed 'ido-ubiquitous)
+(ido-mode t)
+(ido-everywhere 1)
+(ido-ubiquitous-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; COMMENT/UNCOMMENT WITH C-/
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun comment-or-uncomment-region-or-line ()
-  "Comments or uncomments the region or the current line if there's no active region."
+  "Comments or uncomments the region or the current"
   (interactive)
   (let (beg end)
     (if (region-active-p)
@@ -70,15 +54,22 @@
     (comment-or-uncomment-region beg end)))
 (global-set-key (kbd "C-/") 'comment-or-uncomment-region-or-line)
 
-;; spell checking
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; SPELL CHECKING
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq ispell-program-name "aspell"
       ispell-extra-args '("--sug-mode=ultra"))
 
-;; plain text editing
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PLAIN TEXT EDITING
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'text-mode-hook 'flyspell-mode)
 
-;; latex specific
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LATEX EDITING
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(check-installed 'auctex)
 (require 'tex)
 (add-hook 'latex-mode-hook 'auto-fill-mode)
 (add-hook 'latex-mode-hook 'flyspell-mode)
@@ -87,22 +78,28 @@
 (setq-default TeX-master nil)
 (setq TeX-engine 'pdflatex)
 
-;; deft
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DEFT
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(check-installed 'deft)
 (setq deft-extension "txt")
 (setq deft-directory "~/Documents/Deft")
 (global-set-key [f8] 'deft)
 
-
-
-;; mu4e
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MU4E
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-file "~/.murc")
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; AUTO COMPLETION
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(check-installed 'company)
+(setq company-idle-delay 0)
+(global-company-mode)
 
-;; printing
-(defun send-region-to-printer (&optional b e)
-  (interactive)
-  (shell-command-on-region
-   b e
-   "ssh orion.local \"iconv -f UTF-8 -t CP850 > /dev/lp0\""
-   ))
-    
+(check-installed 'company-math)
+(add-hook 'LaTeX-mode-hook
+	  (lambda ()
+	    (add-to-list 'company-backends 'company-math-symbols-latex)
+	    (add-to-list 'company-backends 'company-latex-commands)))
