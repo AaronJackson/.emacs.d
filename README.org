@@ -15,11 +15,9 @@ Backup files are not created and files are not automatically saved.
 
 * Custom Global Keybindings
 
-| f8  | open deft                          |
-| f12 | delete trailing whitespace         |
-| C-/ | Comments or uncomments the current |
-|     | region or line.                    |
-
+| f8  | open deft                                         |
+| f12 | delete trailing whitespace                        |
+| C-/ | Comments or uncomments the current region or line |
 
 * Major Modes
 
