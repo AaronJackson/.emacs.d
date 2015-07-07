@@ -30,6 +30,7 @@
 (global-set-key (kbd "<f12>") 'delete-trailing-whitespace)
 
 (tool-bar-mode -1) ;; gui / style
+(menu-bar-mode -1)
 (check-installed 'monokai-theme)
 (load-theme 'monokai t)
 
@@ -87,9 +88,24 @@
 (global-set-key [f8] 'deft)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MATLAB STUFF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(check-installed 'matlab-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MU4E
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(load-file "~/.murc")
+(load-file "~/.emacs.d/mu4e-config.el")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; JOURNAL / LIFE LOGGING
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun journal-today ()
+  (interactive)
+  (find-file (concat "~/Documents/Journal/"
+                     (format-time-string "%y%m%d")
+                     ".txt")))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; AUTO COMPLETION
