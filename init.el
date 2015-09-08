@@ -80,9 +80,9 @@
 (defun asj/new-blog-post (n)
   (interactive "sFilename: ")
   (find-file (concat
-	      "~/public_html/blog/org/"
-	      (format-time-string "%Y-%m-%d-" (current-time))
-	      n ".org"))
+              "~/public_html/blog/org/"
+              (format-time-string "%Y-%m-%d-" (current-time))
+              n ".org"))
   (insert "#+TITLE: \n")
   (insert "#+DATE: ")
   (org-insert-time-stamp (current-time) t)
@@ -90,23 +90,31 @@
   (insert "#+FILETAGS: \n")
   (insert "#+INCLUDE: ../incl-after-title.org\n"))
 
-(defun asj/org-html-publish-to-html-with-tags (plist filename pubdir)
+(defun asj/website-make ()
+  (interactive)
   (shell-command "~/public_html/scripts/generate_tags.sh")
-  (org-html-publish-to-html plist filename pubdir))
+  (org-publish-project "website"))
+
+(defun asj/website-publish ()
+  (interactive)
+  (asj/website-make)
+  (shell-command "~/public_html/scripts/sync.sh"))
 
 (setq org-publish-project-alist
-      '(("posts"
+      '(("website"
+         :components ("website-posts" "website-tags" "website-pages"))
+        ("website-posts"
          :base-directory "~/public_html/blog/org/"
          :base-extension "org"
          :publishing-directory "~/public_html/blog/"
-         :publishing-function asj/org-html-publish-to-html-with-tags
+         :publishing-function org-html-publish-to-html
          :html-head-include-default-style nil
          :html-head-include-scripts nil
-	 :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"../style.css\" />"
+         :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"../style.css\" />"
          :html-postamble "<p><a href=\"./index.html\">Blog Index</a>
 			  &bull; <a href=\"./tags/index.html\">Posts by Tag</a>
 			  &bull; <a href=\"../index.html\">Home</a></p>"
-	 :html-inline-images t
+         :html-inline-images t
          :with-toc nil
          :headline-numbering nil
          :section-number nil
@@ -116,26 +124,26 @@
          :sitemap-sort-files anti-chronologically
          :sitemap-date-format "%e %B %Y %H:%M"
          :sitemap-file-entry-format "%d - %t")
-	("tags"
-	 :base-directory "~/public_html/blog/tags/"
-	 :base-extension "org"
-	 :publishing-directory "~/public_html/blog/tags/"
-	 :publishing-function org-html-publish-to-html
+        ("website-tags"
+         :base-directory "~/public_html/blog/tags/"
+         :base-extension "org"
+         :publishing-directory "~/public_html/blog/tags/"
+         :publishing-function  org-html-publish-to-html
          :html-head-include-default-style nil
          :html-head-include-scripts nil
-	 :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"../../style.css\" />"
+         :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"../../style.css\" />"
          :html-postamble "<p><a href=\"index.html\">All Tags</a>
                           &bull; <a href=\"../index.html\">Blog Index</a></p>")
-	("pages"
+        ("website-pages"
          :base-directory "~/public_html/"
          :base-extension "org"
          :publishing-directory "~/public_html/"
          :publishing-function org-html-publish-to-html
          :html-head-include-default-style nil
          :html-head-include-scripts nil
-	 :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />"
-	 :html-postamble "<p><a href=\"index.html\">&larr; Return Home</a></p>"
-	 :html-inline-images t
+         :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />"
+         :html-postamble "<p><a href=\"index.html\">&larr; Return Home</a></p>"
+         :html-inline-images t
          :with-toc nil
          :headline-numbering nil
          :section-number nil)))
@@ -198,11 +206,11 @@
 
 
 (add-hook 'web-mode-hook
-	  '(lambda ()
-	     (setq web-mode-markup-indent-offset 2
-		   web-mode-css-indent-offset 2
-		   web-mode-code-indent-offset 2)
-	     ))
+          '(lambda ()
+             (setq web-mode-markup-indent-offset 2
+                   web-mode-css-indent-offset 2
+                   web-mode-code-indent-offset 2)
+             ))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -214,6 +222,6 @@
 
 (check-installed 'company-math)
 (add-hook 'LaTeX-mode-hook
-	  (lambda ()
-	    (add-to-list 'company-backends 'company-math-symbols-latex)
-	    (add-to-list 'company-backends 'company-latex-commands)))
+          (lambda ()
+            (add-to-list 'company-backends 'company-math-symbols-latex)
+            (add-to-list 'company-backends 'company-latex-commands)))
