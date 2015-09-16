@@ -15,10 +15,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SETTINGS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq gc-cons-threshold 67108864) ; 64MB before garbage collection
 (setq inhibit-splash-screen t)
+(server-start)
 
 (global-linum-mode t) ;; line numbers
 (setq linum-format "%3d ")
+(column-number-mode t)
+
+(show-paren-mode t)
+(setq show-paren-delay 0)
 
 (setq auto-save-default nil ;; auto save
       make-backup-files nil)
@@ -31,8 +37,7 @@
 
 (tool-bar-mode -1) ;; gui / style
 (menu-bar-mode -1)
-;; (check-installed 'ample-theme)
-;; (load-theme 'ample-light t)
+(display-battery-mode t)
 (check-installed 'monokai-theme)
 (load-theme 'monokai t)
 
@@ -57,6 +62,19 @@
 (defun asj/disable-special ()
   (setq show-trailing-whitespace nil)
   (linum-mode -1))
+
+;; By Bozhidar Batsov
+(defun google ()
+ "Google the selected region if any, display a query prompt otherwise."
+ (interactive)
+ (browse-url
+  (concat
+   "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
+   (url-hexify-string (if mark-active
+			  (buffer-substring
+			   (region-beginning) (region-end))
+			  (read-string "Search Google: "))))))
+(global-set-key (kbd "C-x g") 'google)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ORG MODE / CALENDARING / BLOGGING
@@ -133,14 +151,11 @@
 ;; WEB DEVELOPMENT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (check-installed 'web-mode)
-
-
 (add-hook 'web-mode-hook
           '(lambda ()
              (setq web-mode-markup-indent-offset 2
                    web-mode-css-indent-offset 2
-                   web-mode-code-indent-offset 2)
-             ))
+                   web-mode-code-indent-offset 2)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
