@@ -35,7 +35,7 @@
          :html-head-include-scripts nil
          :html-head "
 <link rel=\"stylesheet\" type=\"text/css\"
-      href=\"../style.css\" />"
+      href=\"/style.css\" />"
          :html-postamble "
 <p><a href=\"./index.html\">Blog Index</a>
 &bull; <a href=\"./tags/index.html\">Posts by Tag</a>
@@ -64,7 +64,7 @@
          :html-head-include-scripts nil
          :html-head "
 <link rel=\"stylesheet\" type=\"text/css\"
-      href=\"../../style.css\" />"
+      href=\"/style.css\" />"
          :html-postamble "
 <p><a href=\"index.html\">All Tags</a>
 &bull; <a href=\"../index.html\">Blog Index</a></p>"
@@ -80,7 +80,7 @@
          :html-head-include-scripts nil
          :html-head "
 <link rel=\"stylesheet\" type=\"text/css\"
-      href=\"style.css\" />"
+      href=\"/style.css\" />"
          :html-postamble "
 <p><a href=\"index.html\">&larr; Return Home</a></p>"
          :html-inline-images t
