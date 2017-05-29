@@ -15,9 +15,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SETTINGS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq gc-cons-threshold 67108864) ; 64MB before garbage collection
-(setq inhibit-splash-screen t)
-(server-start)
+(setq gc-cons-threshold 33554432) ; 32MB before garbage collection
+(setq inhibit-splash-screen t
+      initial-scratch-message nil)
 
 (global-linum-mode t) ;; line numbers
 (setq linum-format "%3d ")
@@ -26,7 +26,9 @@
 (show-paren-mode t)
 (setq show-paren-delay 0)
 
-(setq auto-save-default nil ;; auto save
+(setq-default cursor-type 'box)
+
+(setq auto-save-default t ;; auto save
       make-backup-files nil)
 
 (setq indent-tabs-mode nil ;; tabs
@@ -35,16 +37,21 @@
 (setq-default show-trailing-whitespace t) ;; i hate it
 (global-set-key (kbd "<f12>") 'delete-trailing-whitespace)
 
+(setq frame-title-format '("%b - %F"))
+
 (tool-bar-mode -1) ;; gui / style
 (menu-bar-mode -1)
 (display-battery-mode t)
-(check-installed 'monokai-theme)
-(load-theme 'monokai t)
+;; (check-installed 'monokai-theme)
+;; (load-theme 'monokai t)
+;; (load-theme 'wombat t)
+
+(setq browse-url-generic-program "/usr/bin/google-chrome")
 
 (add-hook 'image-mode-hook 'asj/disable-special)
 (add-hook 'doc-view-mode-hook 'asj/disable-special)
+(add-hook 'erc-mode 'asj/disable-special)
 (setq doc-view-resolution 500) ;; default is too low
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CUSTOM FUNCTIONS
@@ -60,8 +67,15 @@
 (global-set-key (kbd "C-/") 'asj/comment-or-uncomment-region-or-line)
 
 (defun asj/disable-special ()
+  (interactive)
   (setq show-trailing-whitespace nil)
   (linum-mode -1))
+
+(defun asj/set-font-size (n)
+  (interactive "nFont Size: ")
+  (set-face-attribute 'default nil :height (* n 10)))
+
+(asj/set-font-size 8)
 
 ;; By Bozhidar Batsov
 (defun google ()
@@ -77,7 +91,7 @@
 (global-set-key (kbd "C-x g") 'google)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ORG MODE / CALENDARING / BLOGGING
+;; ORG MODE / WEBSITE + BLOGGING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; babel
 (org-babel-do-load-languages
@@ -88,12 +102,6 @@
 (setq org-src-fontify-natively t)
 (setq org-agenda-files
       (list "/home/aaron/Documents/Organisation/Agenda/"))
-
-;; calendar
-(check-installed 'calfw)
-(require 'calfw-org)
-(add-hook 'cfw:calendar-mode-hook 'asj/disable-special)
-(global-set-key [f7] 'cfw:open-org-calendar)
 
 (load-file "~/.emacs.d/website.el")
 
@@ -130,14 +138,6 @@
 (setq TeX-engine 'pdflatex)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; DEFT
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(check-installed 'deft)
-(setq deft-extension "txt")
-(setq deft-directory "~/Documents/Organisation/Deft")
-(global-set-key [f8] 'deft)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MATLAB STUFF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (check-installed 'matlab-mode)
@@ -157,7 +157,6 @@
                    web-mode-css-indent-offset 2
                    web-mode-code-indent-offset 2)))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; AUTO COMPLETION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -170,3 +169,31 @@
           (lambda ()
             (add-to-list 'company-backends 'company-math-symbols-latex)
             (add-to-list 'company-backends 'company-latex-commands)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PHP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'auto-mode-alist  '("\\.php\\'" . web-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; IRC/ERC
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-hook 'erc-mode-hook 'asj/disable-special)
+(setq erc-nick "asjackson"
+      erc-server "irc.freenode.net"
+      erc-port 6697
+      erc-log-channels-directory "~/irc/"
+      erc-save-buffer-on-part t
+      erc-save-queries-on-quit t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Confluence Wiki
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq confluence-url "https://workspace.nottingham.ac.uk/rpc/xmlrpc")
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom variable stuff
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
