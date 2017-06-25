@@ -37,7 +37,8 @@
 ;;   mu4e-index-lazy-check t)    ;; don't consider up-to-date dirs
 
 (setq mu4e-index-cleanup t
-      mu4e-index-lazy-check nil)
+      mu4e-index-lazy-check nil
+      mu4e-headers-include-related nil)
 
 (setq mu4e-compose-signature-auto-include t
       mail-signature-file "~/.signature")
