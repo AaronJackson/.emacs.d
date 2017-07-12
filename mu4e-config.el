@@ -12,8 +12,8 @@
 (setq mu4e-mu-binary "/usr/local/bin/mu"
       mu4e-get-mail-command "true"
       mu4e-update-interval 3600
-      ;; mu4e-html2text-command "w3m -dump -cols 70 -T text/html"
-      mu4e-html2text-command "html2text -utf8 -width 72 -style compact"
+      mu4e-html2text-command "w3m -dump -cols 70 -T text/html"
+      ;; mu4e-html2text-command "html2text -utf8 -width 72 -style compact"
 ;      mu4e-html2text-command 'mu4e-shr2text
 ;      mu4e-view-prefer-html t
       mu4e-msg2pdf "/usr/bin/msg2pdf" ;; requires maildir-utils-extra
