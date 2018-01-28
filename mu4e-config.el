@@ -16,7 +16,7 @@
       ;; mu4e-html2text-command "html2text -utf8 -width 72 -style compact"
 ;      mu4e-html2text-command 'mu4e-shr2text
 ;      mu4e-view-prefer-html t
-      mu4e-msg2pdf "/usr/bin/msg2pdf" ;; requires maildir-utils-extra
+      mu4e-msg2pdf "~/usr/bin/msg2pdf" ;; requires maildir-utils-extra
       mu4e-maildir "~/Maildir"
       message-kill-buffer-on-exit t
       mu4e-sent-messages-behavior 'sent)
@@ -98,36 +98,36 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Account: University of Nottingham
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun mail/use-nottingham ()
-  (interactive)
-  (setq user-mail-address (rot13 "cfknfw@abggvatunz.np.hx")
-        user-full-name "Aaron Jackson"
-	mu4e-user-mail-address-list (list user-mail-address
-					  (rot13 "nneba.wnpxfba@abggvatunz.np.hx")
-					  (rot13 "nfw@pf.abgg.np.hx")
-					  (rot13 "cfknfw@rkznvy.abggvatunz.np.hx")))
+;; (defun mail/use-nottingham ()
+;;   (interactive)
+;;   (setq user-mail-address (rot13 "nneba.wnpxfba@abggvatunz.np.hx")
+;;         user-full-name "Aaron Jackson"
+;; 	mu4e-user-mail-address-list (list user-mail-address
+;; 					  (rot13 "cfknfw@abggvatunz.np.hx")
+;; 					  (rot13 "nfw@pf.abgg.np.hx")
+;; 					  (rot13 "cfknfw@rkznvy.abggvatunz.np.hx")))
 
-  (setq mu4e-drafts-folder "/nottingham/Drafts"
-        mu4e-sent-folder "/nottingham/Sent Items"
-        mu4e-trash-folder "/nottingham/Deleted Items"
-	mu4e-refile-folder "/nottingham/Archive")
+;;   (setq mu4e-drafts-folder "/nottingham/Drafts"
+;;         mu4e-sent-folder "/nottingham/Sent Items"
+;;         mu4e-trash-folder "/nottingham/Deleted Items"
+;; 	mu4e-refile-folder "/nottingham/Archive")
 
-  (setq mu4e-maildir-shortcuts
-        '(("/nottingham/INBOX" . ?i)
-          ("/nottingham/Sent Items"  . ?s)
-          ("/nottingham/Junk E-Mail"  . ?j)))
+;;   (setq mu4e-maildir-shortcuts
+;;         '(("/nottingham/INBOX" . ?i)
+;;           ("/nottingham/Sent Items"  . ?s)
+;;           ("/nottingham/Junk E-Mail"  . ?j)))
 
-  (setq mu4e-bookmarks
-	'(("flag:unread AND maildir:/nottingham/INBOX*"
-	   "Unread Email" ?u)
-	  ("maildir:/nottingham/Archive"
-	   "Archived Email" ?a)))
+;;   (setq mu4e-bookmarks
+;; 	'(("flag:unread AND maildir:/nottingham/INBOX*"
+;; 	   "Unread Email" ?u)
+;; 	  ("maildir:/nottingham/Archive"
+;; 	   "Archived Email" ?a)))
 
-  (setq message-send-mail-function 'smtpmail-send-it
-        smtpmail-stream-type 'ssl
-        smtpmail-default-smtp-server "smtp.nottingham.ac.uk"
-        smtpmail-smtp-server "smtp.nottingham.ac.uk"
-        smtpmail-smtp-service 465))
+;;   (setq message-send-mail-function 'smtpmail-send-it
+;;         smtpmail-stream-type 'ssl
+;;         smtpmail-default-smtp-server "smtp.nottingham.ac.uk"
+;;         smtpmail-smtp-server "smtp.nottingham.ac.uk"
+;;         smtpmail-smtp-service 465))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set up account switching
@@ -141,9 +141,9 @@
 		   (mail/use-personal)
 		   (message "Account: Personal")
 		   (mu4e)))
-(global-set-key (kbd "C-x m n")
-		'(lambda ()
-		   (interactive)
-		   (mail/use-nottingham)
-		   (message "Account: University of Nottingham")
-		   (mu4e)))
+;; (global-set-key (kbd "C-x m n")
+;; 		'(lambda ()
+;; 		   (interactive)
+;; 		   (mail/use-nottingham)
+;; 		   (message "Account: University of Nottingham")
+;; 		   (mu4e)))
