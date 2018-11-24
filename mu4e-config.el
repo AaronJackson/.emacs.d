@@ -16,7 +16,7 @@
       ;; mu4e-html2text-command "html2text -utf8 -width 72 -style compact"
 ;      mu4e-html2text-command 'mu4e-shr2text
 ;      mu4e-view-prefer-html t
-      mu4e-msg2pdf "~/usr/bin/msg2pdf" ;; requires maildir-utils-extra
+      mu4e-msg2pdf "/usr/bin/msg2pdf" ;; requires maildir-utils-extra
       mu4e-maildir "~/Maildir"
       message-kill-buffer-on-exit t
       mu4e-sent-messages-behavior 'sent)
