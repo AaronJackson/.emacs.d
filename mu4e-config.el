@@ -12,10 +12,7 @@
 (setq mu4e-mu-binary "/usr/local/bin/mu"
       mu4e-get-mail-command "true"
       mu4e-update-interval 3600
-      mu4e-html2text-command "w3m -dump -cols 70 -T text/html"
-      ;; mu4e-html2text-command "html2text -utf8 -width 72 -style compact"
-;      mu4e-html2text-command 'mu4e-shr2text
-;      mu4e-view-prefer-html t
+     mu4e-html2text-command 'mu4e-shr2text
       mu4e-msg2pdf "~/usr/bin/msg2pdf" ;; requires maildir-utils-extra
       mu4e-maildir "~/Maildir"
       message-kill-buffer-on-exit t
@@ -31,10 +28,6 @@
 (add-hook 'mu4e-headers-mode-hook 'mail/mu4e-default-hook)
 (add-hook 'mu4e-compose-mode-hook 'mail/mu4e-default-hook)
 (add-hook 'mu4e-view-mode-hook    'mail/mu4e-default-hook)
-
-;; (setq
-;;   mu4e-index-cleanup nil      ;; don't do a full cleanup check
-;;   mu4e-index-lazy-check t)    ;; don't consider up-to-date dirs
 
 (setq mu4e-index-cleanup t
       mu4e-index-lazy-check nil
@@ -59,8 +52,10 @@
 
 (add-to-list 'mu4e-view-actions
 	     '("ViewInBrowser" . mu4e-action-view-in-browser) t)
-
-
+(setq doc-view-resolution 180)
+(add-hook 'doc-view-mode-hook 'asj/disable-special)
+(defadvice doc-view-display (after fit-width activate)
+  (doc-view-fit-width-to-window))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Account: Personal
@@ -87,6 +82,11 @@
   (setq mu4e-bookmarks
 	'((mu4e-refile-folder "Archive (This Year)" ?a)
 	  ("/personal/Lists" "Lists" ?l)
+	  ("/personal/Lists/.freebsd" "Lists - freebsd" ?f)
+	  ("/personal/Lists/.tuhs" "Lists - TUHS" ?t)
+	  ("/personal/Lists/.ham" "Lists - Ham Radio" ?h)
+	  ("/personal/Lists/.centos" "Lists - CentOS" ?e)
+	  ("/personal/Lists/.groupsio" "Lists - Groups.io" ?g)
 	  ("/personal/Lists/.cctalk" "Lists - cctalk" ?c)))
 
   (setq message-send-mail-function 'smtpmail-send-it
@@ -94,40 +94,6 @@
         smtpmail-default-smtp-server "escher.rhwyd.co.uk"
         smtpmail-smtp-server "escher.rhwyd.co.uk"
         smtpmail-smtp-service 587))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Account: University of Nottingham
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun mail/use-nottingham ()
-;;   (interactive)
-;;   (setq user-mail-address (rot13 "nneba.wnpxfba@abggvatunz.np.hx")
-;;         user-full-name "Aaron Jackson"
-;; 	mu4e-user-mail-address-list (list user-mail-address
-;; 					  (rot13 "cfknfw@abggvatunz.np.hx")
-;; 					  (rot13 "nfw@pf.abgg.np.hx")
-;; 					  (rot13 "cfknfw@rkznvy.abggvatunz.np.hx")))
-
-;;   (setq mu4e-drafts-folder "/nottingham/Drafts"
-;;         mu4e-sent-folder "/nottingham/Sent Items"
-;;         mu4e-trash-folder "/nottingham/Deleted Items"
-;; 	mu4e-refile-folder "/nottingham/Archive")
-
-;;   (setq mu4e-maildir-shortcuts
-;;         '(("/nottingham/INBOX" . ?i)
-;;           ("/nottingham/Sent Items"  . ?s)
-;;           ("/nottingham/Junk E-Mail"  . ?j)))
-
-;;   (setq mu4e-bookmarks
-;; 	'(("flag:unread AND maildir:/nottingham/INBOX*"
-;; 	   "Unread Email" ?u)
-;; 	  ("maildir:/nottingham/Archive"
-;; 	   "Archived Email" ?a)))
-
-;;   (setq message-send-mail-function 'smtpmail-send-it
-;;         smtpmail-stream-type 'ssl
-;;         smtpmail-default-smtp-server "smtp.nottingham.ac.uk"
-;;         smtpmail-smtp-server "smtp.nottingham.ac.uk"
-;;         smtpmail-smtp-service 465))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set up account switching
@@ -141,9 +107,3 @@
 		   (mail/use-personal)
 		   (message "Account: Personal")
 		   (mu4e)))
-;; (global-set-key (kbd "C-x m n")
-;; 		'(lambda ()
-;; 		   (interactive)
-;; 		   (mail/use-nottingham)
-;; 		   (message "Account: University of Nottingham")
-;; 		   (mu4e)))
