@@ -4,7 +4,7 @@
 (require 'package)
 (setq package-archives
       '(("gnu" . "http://elpa.gnu.org/packages/")
-        ("melpa" . "http://melpa.milkbox.net/packages/")))
+        ("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
 (when (not (member "elpa" (directory-files "~/.emacs.d")))
   (package-refresh-contents))
@@ -14,6 +14,11 @@
 
 (load-file "~/.emacs.d/website.el")     ;; func to make blog post
 (load-file "~/.emacs.d/mu4e-config.el") ;; email configuration
+
+(setenv "PATH" (concat
+		(getenv "PATH")
+		":/usr/local/texlive/2017/bin/x86_64-linux/"))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SETTINGS
@@ -41,6 +46,12 @@
 (tool-bar-mode -1) ;; gui / style
 (menu-bar-mode -1)
 
+(require 'ido)
+(setq ido-enable-flex-matching t
+      ido-everywhere t)
+(ido-mode t)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CUSTOM FUNCTIONS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -54,6 +65,11 @@
     (comment-or-uncomment-region beg end)))
 (global-set-key (kbd "C-/") 'asj/comment-or-uncomment-region-or-line)
 
+(defun asj/test ()
+  (interactive)
+  "Test")
+
+
 (defun asj/disable-special ()
   (interactive)
   (setq show-trailing-whitespace nil)
@@ -62,6 +78,8 @@
 (defun asj/set-font-size (n)
   (interactive "nFont Size: ")
   (set-face-attribute 'default nil :height (* n 10)))
+
+(asj/set-font-size 10)
 
 ;; By Bozhidar Batsov
 (defun google ()
@@ -92,11 +110,26 @@
 ;; LATEX EDITING
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (check-installed 'auctex)
+(setenv "PATH" "/usr/bin/:$PATH" t)
+
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto complete
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (check-installed 'company)
+
+(setq company-idle-delay 0)
+(global-company-mode)
+
+(check-installed 'company-math)
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (add-to-list 'company-backends 'company-math-symbols-latex)
+            (add-to-list 'company-backends 'company-latex-commands)))
+(check-installed 'company-auctex)
+(company-auctex-init)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; WEB DEVELOPMENT
@@ -112,10 +145,41 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; IRC/ERC
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-hook 'erc-mode-hook 'asj/disable-special)
-(setq erc-nick "asjackson"
-      erc-server "irc.freenode.net"
-      erc-log-channels-directory "~/irc/"
-      erc-save-buffer-on-part t
-      erc-save-queries-on-quit t)
+(setq erc-server "bnc.irccloud.com"
+      erc-port 6697
+      erc-nick "asjackson"
+      erc-user-full-name "asjackson"
+      erc-prompt-for-password nil
+      erc-autojoin-channels-alist
+      '()
+      erc-save-buffer-on-part nil
+      erc-save-queries-on-quit nil
+      erc-log-write-after-send t
+      erc-log-write-after-insert t)
+
 (add-hook 'erc-mode 'asj/disable-special)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Multiple cursors
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(global-set-key (kbd "C-c m e") 'mc/edit-lines)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; QuickLisp / sbcl
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;(load (expand-file-name "~/quicklisp/slime-helper.el"))
+;(setq inferior-lisp-program "sbcl")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; OpenSCAD
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load-file "~/.emacs.d/scad-mode.el")
+(load-file "~/.emacs.d/scad-preview.el")
+(require 'scad-mode)
+(require 'scad-preview)
+
+
+
+
+

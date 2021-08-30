@@ -12,7 +12,7 @@
 (setq mu4e-mu-binary "/usr/local/bin/mu"
       mu4e-get-mail-command "true"
       mu4e-update-interval 3600
-     mu4e-html2text-command 'mu4e-shr2text
+      mu4e-html2text-command 'mu4e-shr2text
       mu4e-msg2pdf "~/usr/bin/msg2pdf" ;; requires maildir-utils-extra
       mu4e-maildir "~/Maildir"
       message-kill-buffer-on-exit t
@@ -74,6 +74,7 @@
 	(concat "/personal/Archive/.Inbox/."
 		(format-time-string "%Y" (current-time))))
 
+
   (setq mu4e-maildir-shortcuts
         '(("/personal/INBOX" . ?i)
           ("/personal/Sent"  . ?s)
@@ -87,13 +88,15 @@
 	  ("/personal/Lists/.ham" "Lists - Ham Radio" ?h)
 	  ("/personal/Lists/.centos" "Lists - CentOS" ?e)
 	  ("/personal/Lists/.groupsio" "Lists - Groups.io" ?g)
-	  ("/personal/Lists/.cctalk" "Lists - cctalk" ?c)))
+	  ("/personal/Lists/.cctalk" "Lists - cctalk" ?c)
+  	  ("/personal/Lists/.cluster" "Lists - cluster" ?k)))
 
   (setq message-send-mail-function 'smtpmail-send-it
-        smtpmail-stream-type 'starttls
-        smtpmail-default-smtp-server "escher.rhwyd.co.uk"
-        smtpmail-smtp-server "escher.rhwyd.co.uk"
-        smtpmail-smtp-service 587))
+	smtpmail-stream-type 'tls
+	smtpmail-auth-credentials '(("vinci.rhwyd.co.uk" 465 "aaron" nil))
+	smtpmail-default-smtp-server "vinci.rhwyd.co.uk"
+	smtpmail-smtp-server "vinci.rhwyd.co.uk"
+	smtpmail-smtp-service 465))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set up account switching
