@@ -155,7 +155,7 @@
       erc-log-write-after-send t
       erc-log-write-after-insert t)
 
-(add-hook 'erc-mode 'asj/disable-special)
+(add-hook 'erc-mode-hook 'asj/disable-special)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Multiple cursors
