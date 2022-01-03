@@ -148,10 +148,8 @@
 (setq erc-server "bnc.irccloud.com"
       erc-port 6697
       erc-nick "asjackson"
-      erc-user-full-name "asjackson"
-      erc-prompt-for-password nil
-      erc-autojoin-channels-alist
-      '()
+      erc-prompt-for-password t
+      erc-autojoin-channels-alist '()
       erc-save-buffer-on-part nil
       erc-save-queries-on-quit nil
       erc-log-write-after-send t
