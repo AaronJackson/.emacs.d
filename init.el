@@ -65,11 +65,6 @@
     (comment-or-uncomment-region beg end)))
 (global-set-key (kbd "C-/") 'asj/comment-or-uncomment-region-or-line)
 
-(defun asj/test ()
-  (interactive)
-  "Test")
-
-
 (defun asj/disable-special ()
   (interactive)
   (setq show-trailing-whitespace nil)
