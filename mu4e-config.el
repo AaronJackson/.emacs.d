@@ -91,12 +91,8 @@
 	  ("/personal/Lists/.cctalk" "Lists - cctalk" ?c)
   	  ("/personal/Lists/.cluster" "Lists - cluster" ?k)))
 
-  (setq message-send-mail-function 'smtpmail-send-it
-	smtpmail-stream-type 'tls
-	smtpmail-auth-credentials '(("vinci.rhwyd.co.uk" 465 "aaron" nil))
-	smtpmail-default-smtp-server "vinci.rhwyd.co.uk"
-	smtpmail-smtp-server "vinci.rhwyd.co.uk"
-	smtpmail-smtp-service 465))
+  (setq message-send-mail-function 'message-send-mail-with-sendmail
+	sendmail-program "/home/aaron/usr/bin/ssh-sendmail.sh"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Set up account switching
