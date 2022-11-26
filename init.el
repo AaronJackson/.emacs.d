@@ -19,6 +19,7 @@
 		(getenv "PATH")
 		":/usr/local/texlive/2017/bin/x86_64-linux/"))
 
+(setq ring-bell-function 'ignore)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SETTINGS
