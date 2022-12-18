@@ -78,18 +78,11 @@
   (setq mu4e-maildir-shortcuts
         '(("/personal/INBOX" . ?i)
           ("/personal/Sent"  . ?s)
-          ("/personal/Junk"  . ?j)))
-
-  (setq mu4e-bookmarks
-	'((mu4e-refile-folder "Archive (This Year)" ?a)
-	  ("/personal/Lists" "Lists" ?l)
-	  ("/personal/Lists/.freebsd" "Lists - freebsd" ?f)
-	  ("/personal/Lists/.tuhs" "Lists - TUHS" ?t)
-	  ("/personal/Lists/.ham" "Lists - Ham Radio" ?h)
-	  ("/personal/Lists/.centos" "Lists - CentOS" ?e)
-	  ("/personal/Lists/.groupsio" "Lists - Groups.io" ?g)
-	  ("/personal/Lists/.cctalk" "Lists - cctalk" ?c)
-  	  ("/personal/Lists/.cluster" "Lists - cluster" ?k)))
+          ("/personal/Junk"  . ?j)
+	  ("/personal/Lists" . ?l)
+	  ("/personal/Lists/.cctalk" . ?c)
+	  ("/personal/Lists/.groupsio" . ?g)
+	  ("/comms/INBOX"    . ?C)))
 
   (setq message-send-mail-function 'message-send-mail-with-sendmail
 	sendmail-program "/home/aaron/usr/bin/ssh-sendmail.sh"))
