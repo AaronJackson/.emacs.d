@@ -19,6 +19,8 @@
 		(getenv "PATH")
 		":/usr/local/texlive/2017/bin/x86_64-linux/"))
 
+(check-installed 'good-scroll)
+
 (setq ring-bell-function 'ignore)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
