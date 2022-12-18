@@ -12,8 +12,8 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
-(load-file "~/.emacs.d/website.el")     ;; func to make blog post
-(load-file "~/.emacs.d/mu4e-config.el") ;; email configuration
+(load-file (concat default-directory "/website.el"))     ;; func to make blog post
+(load-file (concat default-directory "/mu4e-config.el")) ;; email configuration
 
 (setenv "PATH" (concat
 		(getenv "PATH")
@@ -158,10 +158,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OpenSCAD
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(load-file "~/.emacs.d/scad-mode.el")
-(load-file "~/.emacs.d/scad-preview.el")
-(require 'scad-mode)
-(require 'scad-preview)
+(check-installed 'scad-mode)
+(check-installed 'scad-preview)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Infra related
